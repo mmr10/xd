@@ -1,0 +1,55 @@
+# ===================================================================
+# Spring Boot configuration for the "prod" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+server:
+  port: ${sie.batch.spring.server.port}
+spring:
+  profiles:
+    active: ${sie.batch.spring.profiles.active}
+  rabbitmq:
+        host: ${sie.batch.spring.rabbitmq.host}
+        port: ${sie.batch.spring.rabbitmq.port}
+        username: ${sie.batch.spring.rabbitmq.user}
+        password: ${sie.batch.spring.rabbitmq.password}
+  data:
+       mongodb:
+           uri: ${sie.batch.data.mongo.uri}    
+           database: ${sie.batch.data.mongo.database}
+       solr:
+         host: ${sie.batch.data.solr.host}
+         zk-host: ${sie.batch.data.solr.zkhost}
+         core: ${sie.batch.data.solr.core}
+  datasource:   
+    driver-class-name: ${sie.batch.datasource.driver-class-name}
+    url: ${sie.batch.datasource.url}
+    name: {sie.batch.datasource.name}
+    username: ${sie.batch.datasource.username}
+    password: ${sie.batch.datasource.password}
+    xa:
+      data-source-class-name: ${sie.batch.datasource.xa.data-source-class-name}
+    test-while-idle: ${sie.batch.datasource.test-while-idle}
+    validationQuery: ${sie.batch.datasource.validationQuery}
+  batch:
+    job:
+      enabled: false
+
+batch:
+  pageSize:       ${sie.batch.pageSize}
+  threadPoolSize: ${sie.batch.threadPoolSize}
+  throttleLimit:  ${sie.batch.throttleLimit}
+
+ecm-core:
+    xsltTransformation:
+      xslLogPath: ${sie.batch.xsltTransformation.xslLogPath}
+    xmlImport:
+      dateFormat: ${sie.batch.xmlImport.dateFormat}
+      defaultCreatorLogin: ${sie.batch.xmlImport.defaultCreatorLogin}
+    

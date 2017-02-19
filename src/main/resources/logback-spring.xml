@@ -1,0 +1,95 @@
+<configuration scan="true">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<springProfile name="dev">
+		<logger name="eu.els.sie.xmlfirst.post.save" level="DEBUG" />
+
+		<logger name="javax.activation" level="WARN" />
+		<logger name="javax.mail" level="WARN" />
+		<logger name="javax.xml.bind" level="WARN" />
+		<logger name="ch.qos.logback" level="WARN" />
+		<logger name="com.sun.xml.internal.bind" level="WARN" />
+		<logger name="com.zaxxer" level="WARN" />
+		<logger name="io.undertow" level="WARN" />
+		<logger name="org.apache" level="WARN" />
+		<logger name="org.apache.catalina.startup.DigesterFactory"
+			level="OFF" />
+		<logger name="org.bson" level="WARN" />
+		<logger name="org.hibernate.validator" level="WARN" />
+		<logger name="org.hibernate" level="WARN" />
+		<logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
+		<logger name="org.springframework" level="WARN" />
+		<logger name="org.springframework.web" level="WARN" />
+		<logger name="org.springframework.security" level="WARN" />
+		<logger name="org.springframework.cache" level="WARN" />
+		<logger name="org.xnio" level="WARN" />
+		<logger name="springfox" level="WARN" />
+		<logger name="sun.rmi" level="WARN" />
+		<logger name="sun.rmi.transport" level="WARN" />
+		<logger name="org.springframework.data.solr.showcase" level="DEBUG" />
+		<logger name="org.springframework.data.solr" level="TRACE" />
+        <logger name="org.mongodb.driver" level="warn"/>
+
+		<root level="DEBUG">
+			<appender-ref ref="CONSOLE" />
+		</root>
+	</springProfile>
+
+	<springProfile name="prod">
+		<!-- The spring properties below are fetched from application-prod.yml -->
+		<springProperty scope="context" name="path" source="sie.post.save.logging.path" />
+		<springProperty scope="context" name="level" source="sie.post.save.logging.level" />
+		<springProperty scope="context" name="appender" source="sie.post.save.logging.appender" />
+		<springProperty scope="context" name="maxFileSize" source="sie.post.save.logging.maxFileSize" />
+		<springProperty scope="context" name="maxHistory"  source="sie.post.save.logging.maxHistory" />
+		<springProperty scope="context" name="totalSizeCap" source="sie.post.save.logging.totalSizeCap" />
+		<appender name="FILE"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<rollingPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+				<fileNamePattern>${path}/sie-post-save-logFile.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+				<maxFileSize>${maxFileSize}</maxFileSize>    
+		        <maxHistory>${maxHistory}</maxHistory>
+		        <totalSizeCap>${totalSizeCap}</totalSizeCap>
+			</rollingPolicy>
+			<encoder>
+				<charset>utf-8</charset>
+				<Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
+			</encoder>
+		</appender>
+
+		<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+			<queueSize>512</queueSize>
+			<appender-ref ref="FILE" />
+		</appender>
+
+		<logger name="eu.els.sie.xmlfirst.post.save" level="${level}" />
+
+		<logger name="javax.activation" level="WARN" />
+		<logger name="javax.mail" level="WARN" />
+		<logger name="javax.xml.bind" level="WARN" />
+		<logger name="ch.qos.logback" level="WARN" />
+		<logger name="com.sun.xml.internal.bind" level="WARN" />
+		<logger name="com.zaxxer" level="WARN" />
+		<logger name="io.undertow" level="WARN" />
+		<logger name="org.apache" level="WARN" />
+		<logger name="org.apache.catalina.startup.DigesterFactory"
+			level="OFF" />
+		<logger name="org.bson" level="WARN" />
+		<logger name="org.hibernate.validator" level="WARN" />
+		<logger name="org.hibernate" level="WARN" />
+		<logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
+		<logger name="org.springframework" level="WARN" />
+		<logger name="org.springframework.web" level="WARN" />
+		<logger name="org.springframework.security" level="WARN" />
+		<logger name="org.springframework.cache" level="WARN" />
+		<logger name="org.xnio" level="WARN" />
+		<logger name="springfox" level="WARN" />
+		<logger name="sun.rmi" level="WARN" />
+		<logger name="sun.rmi.transport" level="WARN" />
+		<logger name="org.mongodb.driver" level="warn"/>
+		<root level="${level}">
+			<appender-ref ref="${appender}" />
+		</root>
+	</springProfile>
+
+</configuration>
